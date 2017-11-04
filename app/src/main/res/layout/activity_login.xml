@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:divider="@drawable/empty_divider"
+        android:dividerPadding="15dp"
+        android:orientation="vertical"
+        android:padding="4dp"
+        android:showDividers="middle">
+
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="Changa-Regular"
+            android:text="@string/intro_text"
+            android:textAppearance="@style/Base.TextAppearance.AppCompat.Large" />
+
+
+        <LinearLayout
+            style="@style/container_linear"
+
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/rounded_border"
+            android:orientation="vertical">
+
+
+            <EditText
+                android:id="@+id/login_mobile"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@android:color/transparent"
+                android:hint="mobile number"
+                android:inputType="phone" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            style="@style/container_linear"
+
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/rounded_border"
+            android:orientation="vertical">
+
+
+            <EditText
+                android:id="@+id/login_pw"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@android:color/transparent"
+                android:hint="password"
+                android:inputType="textPassword" />
+
+        </LinearLayout>
+
+
+        <Button
+            android:id="@+id/login_submit"
+            android:layout_marginBottom="20dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/login" />
+
+        <TextView
+            android:gravity="bottom|center"
+            android:textStyle="bold"
+            android:id="@+id/login_create_user"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:text="@string/create_new_user" />
+
+    </LinearLayout>
+</LinearLayout>

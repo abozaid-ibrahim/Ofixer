@@ -1,0 +1,62 @@
+{
+  "project_info": {
+    "project_number": "719500583338",
+    "firebase_url": "https://ofix-a86b8.firebaseio.com",
+    "project_id": "ofix-a86b8",
+    "storage_bucket": "ofix-a86b8.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:719500583338:android:04d1075784109246",
+        "android_client_info": {
+          "package_name": "com.aone.onlinefix"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "719500583338-q4u97cs0rj1d7gf39d9vkf7s39hrl4pb.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.aone.onlinefix",
+            "certificate_hash": "608cf719e6e802477054938106cf6b2bb653a118"
+          }
+        },
+        {
+          "client_id": "719500583338-b54g1r48nhd3kpj6ujli3arrt910jkmc.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAtggnoM2ptJBQyR5TJ3vXnv_Oh0DeFnVw"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "719500583338-u4onniet1ldn5arilalsqi5adh3u5e25.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.aone.ofix"
+              }
+            },
+            {
+              "client_id": "719500583338-b54g1r48nhd3kpj6ujli3arrt910jkmc.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

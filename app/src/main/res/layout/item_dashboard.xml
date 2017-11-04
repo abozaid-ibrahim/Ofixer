@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="#fdf"
+    android:orientation="vertical">
+
+    <include layout="@layout/problem_layout" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/contact_with_your_client" />
+
+    <Button
+        android:id="@+id/item_db_call"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Call Client Now" />
+
+</LinearLayout>

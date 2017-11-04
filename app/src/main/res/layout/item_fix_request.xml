@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:background="@drawable/rounded_border"
+    android:padding="4dp"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+<include layout="@layout/problem_layout"/>
+
+    <Button
+        android:layout_width="match_parent"
+        android:text="@string/fix_phone"
+        android:id="@+id/fix_request_submit"
+        android:layout_height="wrap_content" />
+</LinearLayout>
