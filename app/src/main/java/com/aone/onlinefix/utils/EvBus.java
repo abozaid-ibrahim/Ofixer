@@ -1,7 +1,7 @@
 package com.aone.onlinefix.utils;
 
 
-import de.greenrobot.event.EventBus;
+import com.squareup.otto.Bus;
 
 /**
  * Created by abuzeid-ibrahim on 10/20/17.
@@ -9,7 +9,7 @@ import de.greenrobot.event.EventBus;
 
  public class EvBus {
 
-    public static EventBus bus =  EventBus.getDefault();
+    public static Bus bus = new Bus();
 
 
 

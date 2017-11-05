@@ -14,7 +14,7 @@ import android.widget.RadioGroup;
 import com.aone.onlinefix.R;
 import com.aone.onlinefix.model.FixRequest;
 import com.aone.onlinefix.model.FixRequestResponse;
-import com.aone.onlinefix.model.UserModel;
+import com.aone.onlinefix.model.Store;
 import com.aone.onlinefix.presenter.ProblemViewPresenter;
 import com.aone.onlinefix.utils.DataSourceManager;
 import com.aone.onlinefix.utils.app;
@@ -64,8 +64,8 @@ public class DashboardRecyclerAdapter extends RecyclerView.Adapter<DashboardRecy
         });
     }
 
-    public  void onEvent(UserModel user){
-        app.makeCall(user.getName());
+    public  void onEvent(Store user){
+//        app.makeCall(user.getName());
 
     }
     private void callAction(FixRequest mItem) {

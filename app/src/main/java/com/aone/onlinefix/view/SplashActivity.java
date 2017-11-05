@@ -5,7 +5,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 
 import com.aone.onlinefix.R;
-import com.aone.onlinefix.model.UserModel;
+import com.aone.onlinefix.model.Store;
 
 public class SplashActivity extends AppCompatActivity {
 
@@ -14,7 +14,7 @@ public class SplashActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
 
-        if (UserModel.getCurrentUser(this) != null) {
+        if (Store.getCurrent() != null) {
             startActivity(new Intent(this, MainActivity.class));
         } else {
             startActivity(new Intent(this, LoginActivity.class));

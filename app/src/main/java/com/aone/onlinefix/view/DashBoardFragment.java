@@ -9,10 +9,12 @@ import android.view.ViewGroup;
 
 import com.aone.onlinefix.R;
 import com.aone.onlinefix.adapters.DashboardRecyclerAdapter;
+import com.aone.onlinefix.callbacks.BaseCallback;
 import com.aone.onlinefix.model.FixRequest;
-import com.aone.onlinefix.model.UserModel;
+import com.aone.onlinefix.model.Store;
 import com.aone.onlinefix.utils.DataSourceManager;
 import com.aone.onlinefix.utils.EvBus;
+import com.squareup.otto.Subscribe;
 
 import java.util.List;
 
@@ -40,7 +42,12 @@ public class DashBoardFragment extends BaseFragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_dashboard, container, false);
         ButterKnife.bind(this, view);
-        DataSourceManager.instance.getMyProblems(UserModel.getCurrentUser(getContext()).getId());
+        if (Store.getCurrent()!=null) {
+            DataSourceManager.instance.getMyProblems(Store.getCurrent().getStore_id());
+        }else{
+
+        }
+
         return view;
 
     }
@@ -58,9 +65,10 @@ public class DashBoardFragment extends BaseFragment {
     }
 
 
-    public void onEvent(List<FixRequest> event) {
+    @Subscribe
+    public void onEvent(BaseCallback.FixRequestsCallback event) {
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        recyclerView.setAdapter(new DashboardRecyclerAdapter(event,null));
+        recyclerView.setAdapter(new DashboardRecyclerAdapter(event.data,null));
 
     }
 

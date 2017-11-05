@@ -5,10 +5,10 @@ import android.content.Intent;
 import android.util.Log;
 
 import com.aone.onlinefix.R;
+import com.aone.onlinefix.callbacks.BaseCallback;
 import com.aone.onlinefix.model.FixRequest;
 import com.aone.onlinefix.model.FixRequestResponse;
 import com.aone.onlinefix.model.Store;
-import com.aone.onlinefix.model.UserModel;
 import com.aone.onlinefix.view.LoginActivity;
 import com.aone.onlinefix.view.MainActivity;
 import com.google.firebase.database.DataSnapshot;
@@ -23,7 +23,6 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Random;
 
-import de.greenrobot.event.EventBus;
 
 import static java.security.AccessController.getContext;
 
@@ -73,7 +72,7 @@ public class DataSourceManager {
                     }
 
                 }
-                EvBus.bus.post(result);
+                EvBus.bus.post(new BaseCallback.FixRequestsCallback(result));
             }
 
             @Override
@@ -97,11 +96,11 @@ public class DataSourceManager {
                     DataSnapshot problem = snapshotIterator.next();
                     String userid = problem.getKey();
 
-                    Iterator<DataSnapshot> test1 = problem.getChildren().iterator();
-                    DataSnapshot test2 = test1.next();
+                    Iterator<DataSnapshot> childrensIterator = problem.getChildren().iterator();
+                    DataSnapshot currentObject = childrensIterator.next();
 
 
-                    FixRequest fixRequest = test2.getValue(FixRequest.class);
+                    FixRequest fixRequest = currentObject.getValue(FixRequest.class);
                     if (fixRequest.getState().equals(ProblemState.Store_Going_To_Fix.toString()) &&
                             fixRequest.getStore_id().equals(storeid)) {
 
@@ -109,7 +108,7 @@ public class DataSourceManager {
                         result.add(fixRequest);
                     }
                 }
-                EvBus.bus.post(result);
+                EvBus.bus.post(new BaseCallback.FixRequestsCallback(result));
             }
 
             @Override
@@ -129,8 +128,8 @@ public class DataSourceManager {
 
                 if (dataSnapshot.exists()) {
 
-                    UserModel store = dataSnapshot.getValue(UserModel.class);
-EvBus.bus.post(store);
+                    Store store = dataSnapshot.getValue(Store.class);
+                    EvBus.bus.post(store);
                 } else {
                     System.err.println("???USER NOT FOUND");
                 }
@@ -156,9 +155,9 @@ EvBus.bus.post(store);
 
     public void addResponse(FixRequestResponse response) {
         DatabaseReference myRef = database.getReference(FirDB.response_table);
-        int randomKey = new Random().nextInt();
-        String id = String.valueOf(randomKey + System.currentTimeMillis());
-        myRef.child(response.getUser_id()).child(response.getRequest_id()).child(id).setValue(response);
+        int randomInt = new Random().nextInt();
+        String randomKey = String.valueOf(randomInt + System.currentTimeMillis());
+        myRef.child(response.getUser_id()).child(response.getRequest_id()).child(randomKey).setValue(response);
     }
 
     public void addStore(final Context context, final Store store) {
@@ -176,7 +175,7 @@ EvBus.bus.post(store);
 
                         } else {
 
-                            new UserModel().save(context, store);
+                            store.save();
                             EvBus.bus.post(store);
 
                         }

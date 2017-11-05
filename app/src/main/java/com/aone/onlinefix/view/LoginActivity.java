@@ -9,7 +9,6 @@ import android.widget.EditText;
 import com.aone.onlinefix.R;
 import com.aone.onlinefix.model.FixRequest;
 import com.aone.onlinefix.model.Store;
-import com.aone.onlinefix.model.UserModel;
 import com.aone.onlinefix.utils.FirDB;
 import com.aone.onlinefix.utils.app;
 import com.aone.onlinefix.utils.ui;
@@ -77,8 +76,7 @@ public class LoginActivity extends AppCompatActivity {
 
 
                     Store store = dataSnapshot.getValue(Store.class);
-                    new UserModel().save(LoginActivity.this, store);
-
+                   store.save();
                     startActivity(new Intent(LoginActivity.this, MainActivity.class));
                 } else {
                     ui.show(LoginActivity.this, R.string.store_not_registered);

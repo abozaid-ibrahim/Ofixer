@@ -10,9 +10,11 @@ import android.view.ViewGroup;
 
 import com.aone.onlinefix.R;
 import com.aone.onlinefix.adapters.FixRequestsRecyclerAdapter;
+import com.aone.onlinefix.callbacks.BaseCallback;
 import com.aone.onlinefix.model.FixRequest;
 import com.aone.onlinefix.utils.DataSourceManager;
 import com.aone.onlinefix.utils.EvBus;
+import com.squareup.otto.Subscribe;
 
 import java.util.List;
 
@@ -61,9 +63,9 @@ public class FixRequestsFragment extends BaseFragment {
     }
 
 
-    public void onEvent(List<FixRequest> event) {
-        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        recyclerView.setAdapter(new FixRequestsRecyclerAdapter(event, mListener));
+    @Subscribe
+    public void onEvent(BaseCallback.FixRequestsCallback event) {
+        recyclerView.setAdapter(new FixRequestsRecyclerAdapter(event.data, mListener));
 
     }
 

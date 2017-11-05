@@ -2,15 +2,22 @@ package com.aone.onlinefix.model;
 
 import java.util.List;
 
+import io.realm.Realm;
+import io.realm.RealmObject;
+import io.realm.RealmResults;
+import io.realm.annotations.Ignore;
+import io.realm.annotations.PrimaryKey;
+
 /**
  * Created by abuzeid on 10/23/17.
  */
 
-public class Store {
+public class Store extends RealmObject{
 
 
 
     private String store_name;
+    @PrimaryKey
     private String store_id;
 
     private String place;
@@ -22,6 +29,7 @@ public class Store {
     private String email;
     private String password;
     private String username;
+    @Ignore
     private List<DeviceModel> modelCanFix;
 
     public Store() {
@@ -138,4 +146,19 @@ public class Store {
     public void setModelCanFix(List<DeviceModel> modelCanFix) {
         this.modelCanFix = modelCanFix;
     }
+
+    public void save() {
+        Realm realm = Realm.getDefaultInstance();
+        realm.beginTransaction();
+        realm.copyToRealm(this);
+        realm.commitTransaction();
+    }
+
+    public  static  Store getCurrent(){
+        RealmResults<Store> store = Realm.getDefaultInstance().where(Store.class).findAll();
+        if (store.size()>0)
+            return store.get(0);
+        return null;
+    }
+
 }
