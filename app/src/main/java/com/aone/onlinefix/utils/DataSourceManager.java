@@ -1,7 +1,5 @@
 package com.aone.onlinefix.utils;
 
-import android.content.Context;
-import android.content.Intent;
 import android.util.Log;
 
 import com.aone.onlinefix.R;
@@ -9,8 +7,6 @@ import com.aone.onlinefix.callbacks.BaseCallback;
 import com.aone.onlinefix.model.FixRequest;
 import com.aone.onlinefix.model.FixRequestResponse;
 import com.aone.onlinefix.model.Store;
-import com.aone.onlinefix.view.LoginActivity;
-import com.aone.onlinefix.view.MainActivity;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -23,26 +19,19 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Random;
 
-
-import static java.security.AccessController.getContext;
-
 /**
  * Created by abuzeid on 10/19/17.
  */
 
 public class DataSourceManager {
     public static final String TAG = "FirBase DATABAse";
+    public static final DataSourceManager instance = new DataSourceManager();
+    FirebaseDatabase database = FirebaseDatabase.getInstance();
 
 
     private DataSourceManager() {
 
     }
-
-    public static final DataSourceManager instance = new DataSourceManager();
-
-
-    FirebaseDatabase database = FirebaseDatabase.getInstance();
-
 
     public void getAllProblems() {
         DatabaseReference myRef = database.getReference(FirDB.problems_table);
@@ -53,24 +42,26 @@ public class DataSourceManager {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
 
+
+                log(dataSnapshot);
                 Iterator<DataSnapshot> snapshotIterator = dataSnapshot.getChildren().iterator();
                 while (snapshotIterator.hasNext()) {
-                    DataSnapshot problem = snapshotIterator.next();
-                    Object test = problem.getValue();
-                    Iterator<DataSnapshot> test1 = problem.getChildren().iterator();
-                    DataSnapshot test2 = test1.next();
+                    DataSnapshot keyValueObject = snapshotIterator.next();
+                    Iterator<DataSnapshot> userProblems = keyValueObject.getChildren().iterator();
+                    while (userProblems.hasNext()) {
 
-                    //FixRequest fixRequest = problem.getValue(FixRequest.class);
-
-                    FixRequest fixRequest = test2.getValue(FixRequest.class);
+                        DataSnapshot currentReq = userProblems.next();
 
 
-                    if (fixRequest.getState().equals(ProblemState.Wait_Stores_response.toString())) {
+                        FixRequest fixRequest = currentReq.getValue(FixRequest.class);
 
-                        fixRequest.setUser_id(problem.getKey());
-                        result.add(fixRequest);
+
+                        if (fixRequest.getState().equals(ProblemState.Wait_Stores_response.toString())) {
+
+                            fixRequest.setUser_id(keyValueObject.getKey());
+                            result.add(fixRequest);
+                        }
                     }
-
                 }
                 EvBus.bus.post(new BaseCallback.FixRequestsCallback(result));
             }
@@ -80,6 +71,11 @@ public class DataSourceManager {
                 error(error);
             }
         });
+    }
+
+    private void log(DataSnapshot dataSnapshot) {
+        Log.d("vip", "");
+        Log.d("vip", "data_snapshot=>> " + dataSnapshot);
     }
 
     public void getMyProblems(final String storeid) {
@@ -101,12 +97,13 @@ public class DataSourceManager {
 
 
                     FixRequest fixRequest = currentObject.getValue(FixRequest.class);
-                    if (fixRequest.getState().equals(ProblemState.Store_Going_To_Fix.toString()) &&
-                            fixRequest.getStore_id().equals(storeid)) {
+                    if (fixRequest.getStore_id() != null)
+                        if (fixRequest.getState().equals(ProblemState.Store_Going_To_Fix.toString()) &&
+                                fixRequest.getStore_id().equals(storeid)) {
 
-                        fixRequest.setUser_id(userid);
-                        result.add(fixRequest);
-                    }
+                            fixRequest.setUser_id(userid);
+                            result.add(fixRequest);
+                        }
                 }
                 EvBus.bus.post(new BaseCallback.FixRequestsCallback(result));
             }
@@ -157,10 +154,10 @@ public class DataSourceManager {
         DatabaseReference myRef = database.getReference(FirDB.response_table);
         int randomInt = new Random().nextInt();
         String randomKey = String.valueOf(randomInt + System.currentTimeMillis());
-        myRef.child(response.getUser_id()).child(response.getRequest_id()).child(randomKey).setValue(response);
+        myRef.child(response.getUser_id()).child(response.getRequest_id()).child(response.getStore_id()).setValue(response);
     }
 
-    public void addStore(final Context context, final Store store) {
+    public void addStore(final Store store) {
         DatabaseReference myRef = database.getReference(FirDB.stores_table);
 
 

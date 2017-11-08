@@ -16,7 +16,8 @@ public class FixRequestResponse   {
     private String request_id;
     private String user_id;
 
-    private String cost;
+    private String home_cost;
+    private String store_cost;
 
     private String duration;
     private String guarntee;
@@ -36,13 +37,12 @@ public class FixRequestResponse   {
     public FixRequestResponse(String store_name, String response_id, String store_id, String request_id,
                               String cost, String duration, String guarntee, String place,
                               String date, String latitude, String longitude, String devicetype,
-                              String address, String mobile,String uid) {
+                              String address, String mobile, String uid, String home_cost, String store_cost) {
         this.user_id = uid;
         this.store_name = store_name;
         this.response_id = response_id;
         this.store_id = store_id;
         this.request_id = request_id;
-        this.cost = cost;
         this.duration = duration;
         this.guarntee = guarntee;
         this.place = place;
@@ -52,6 +52,8 @@ public class FixRequestResponse   {
         this.devicetype = devicetype;
         this.address = address;
         this.mobile = mobile;
+        this.home_cost = home_cost;
+        this.store_cost = store_cost;
     }
 
     public String getStore_name() {
@@ -86,13 +88,7 @@ public class FixRequestResponse   {
         this.request_id = request_id;
     }
 
-    public String getCost() {
-        return cost;
-    }
 
-    public void setCost(String cost) {
-        this.cost = cost;
-    }
 
     public String getDuration() {
         return duration;
@@ -176,5 +172,21 @@ public class FixRequestResponse   {
 
     public Object toMap() {
         return null;
+    }
+
+    public String getStore_cost() {
+        return store_cost;
+    }
+
+    public void setStore_cost(String store_cost) {
+        this.store_cost = store_cost;
+    }
+
+    public String getHome_cost() {
+        return home_cost;
+    }
+
+    public void setHome_cost(String home_cost) {
+        this.home_cost = home_cost;
     }
 }

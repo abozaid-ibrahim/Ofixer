@@ -12,19 +12,16 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.CheckBox;
 import android.widget.EditText;
-import android.widget.RadioGroup;
 import android.widget.Spinner;
 
 import com.aone.onlinefix.R;
-import com.aone.onlinefix.dummy.DummyContent;
 import com.aone.onlinefix.model.FixRequest;
 import com.aone.onlinefix.model.FixRequestResponse;
+import com.aone.onlinefix.model.Store;
 import com.aone.onlinefix.utils.DataSourceManager;
+import com.aone.onlinefix.utils.FixPlace;
 import com.aone.onlinefix.utils.app;
-
-import java.sql.Time;
 
 import butterknife.ButterKnife;
 
@@ -34,6 +31,16 @@ public class MainActivity extends AppCompatActivity
 //    @BindView(R.id.fragments_container)
 //    private View contianer;
 
+
+    private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
+            = new BottomNavigationView.OnNavigationItemSelectedListener() {
+
+        @Override
+        public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+            return onItemSelected(item.getItemId());
+        }
+
+    };
 
     @Override
     public void onPointerCaptureChanged(boolean hasCapture) {
@@ -46,8 +53,6 @@ public class MainActivity extends AppCompatActivity
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
         setNavigationMenu();
-
-
         if (savedInstanceState == null) {
             onItemSelected(R.id.navigation_home);
         }
@@ -55,24 +60,14 @@ public class MainActivity extends AppCompatActivity
 
     }
 
-    private void setNavigationMenu() {
-        BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
-        navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
-    }
-
 
 
     /*listener*/
 
-    private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
-            = new BottomNavigationView.OnNavigationItemSelectedListener() {
-
-        @Override
-        public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-            return onItemSelected(item.getItemId());
-        }
-
-    };
+    private void setNavigationMenu() {
+        BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
+        navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
+    }
 
     private boolean onItemSelected(int item) {
         Fragment fragment = null;
@@ -108,17 +103,26 @@ public class MainActivity extends AppCompatActivity
 
     }
 
-    private void showFixingDialog(final FixRequest uri) {
+    private void showFixingDialog(final FixRequest fixRequest) {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         //builder.setMessage("Fix Phone")
 
         View view = LayoutInflater.from(this).inflate(R.layout.dialog_fix_request_response, null);
-        final EditText costField = (EditText) view.findViewById(R.id.dialog_fix_cost_tf);
         final EditText hoursField = (EditText) view.findViewById(R.id.dialog_fix_hours_tf);
         final EditText minutesField = (EditText) view.findViewById(R.id.dialog_fix_min_tf);
-        final RadioGroup radioGroup = (RadioGroup) view.findViewById(R.id.dialog_radio_group);
-        final Spinner guarntee =  view.findViewById(R.id.guarntee_spinner);
-
+        final Spinner guarntee = view.findViewById(R.id.guarntee_spinner);
+        final View homeCostLayout = view.findViewById(R.id.dialog_fix_home_cost_layout);
+        final View storeCostLayout = view.findViewById(R.id.dialog_fix_store_cost_layout);
+        final EditText storeCostEt = view.findViewById(R.id.dialog_fix_store_cost);
+        final EditText homeCostEt = view.findViewById(R.id.dialog_fix_home_cost);
+        if (fixRequest.getPlace().equals(FixPlace.home.toString())) {
+            storeCostLayout.setVisibility(View.GONE);
+        } else if (fixRequest.getPlace().equals(FixPlace.store.toString())) {
+            homeCostLayout.setVisibility(View.GONE);
+        } else if (fixRequest.getPlace().equals(FixPlace.all.toString())) {
+            homeCostLayout.setVisibility(View.VISIBLE);
+            storeCostLayout.setVisibility(View.VISIBLE);
+        }
 
 
         ArrayAdapter<String> spinnerArrayAdapter = new ArrayAdapter<String>
@@ -142,10 +146,10 @@ public class MainActivity extends AppCompatActivity
                 .setPositiveButton(R.string.send, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
 
-                        sendRequest(uri,costField.getText().toString(),
+                        sendResponse(fixRequest, homeCostEt.getText().toString(),
                                 hoursField.getText().toString() + ":" + minutesField.getText().toString(),
                                 guarntee.getSelectedItem().toString(),
-                                radioGroup.getCheckedRadioButtonId());
+                                storeCostEt.getText().toString());
                     }
                 })
                 .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
@@ -159,31 +163,23 @@ public class MainActivity extends AppCompatActivity
         builder.create().show();
     }
 
-    private void sendRequest(FixRequest uri, String cost, String duration, String gar, int checkedRadioButtonId) {
-String place = "";
+    private void sendResponse(FixRequest uri, String hcost, String duration, String gar, String scost) {
 
-switch (checkedRadioButtonId){
-    case R.id.radioHome:
-        place = "Home";
-        break;
-    case R.id.radioStore:
-        place = "Store";
-        break;
-    case R.id.radioBoth:
-        place = "Both";
-        break;
-    default:
-        break;
-}
+
         FixRequestResponse response = new FixRequestResponse();
 
         response.setUser_id(uri.getUser_id());
         response.setRequest_id(uri.getRequest_id());
-        response.setCost(cost);
-        response.setDate(new Time(System.currentTimeMillis()).toString());
+        response.setHome_cost(hcost);
+        response.setStore_cost(scost);
+        response.setDuration(duration);
+        response.setDate(app.timeNow());
         response.setDevicetype("android");
         response.setGuarntee(gar);
-        response.setPlace(place);
+        response.setStore_id(Store.getCurrent().getStore_id());
+        response.setStore_name(Store.getCurrent().getStore_name());
+        response.setAddress(Store.getCurrent().getAddress());
+
         DataSourceManager.instance.addResponse(response);
     }
 

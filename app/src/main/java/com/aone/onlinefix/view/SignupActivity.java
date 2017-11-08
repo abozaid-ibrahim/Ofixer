@@ -9,12 +9,9 @@ import com.aone.onlinefix.R;
 import com.aone.onlinefix.model.Store;
 import com.aone.onlinefix.utils.DataSourceManager;
 import com.aone.onlinefix.utils.EvBus;
-import com.aone.onlinefix.utils.FirDB;
 import com.aone.onlinefix.utils.app;
 import com.aone.onlinefix.utils.ui;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.Query;
+import com.squareup.otto.Subscribe;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -34,6 +31,8 @@ public class SignupActivity extends AppCompatActivity {
 
     @BindView(R.id.signup_name)
     EditText nameField;
+    @BindView(R.id.signup_address)
+    EditText addressField;
 
 
     @Override
@@ -64,12 +63,21 @@ public class SignupActivity extends AppCompatActivity {
             ui.show(this, getString(R.string.enter_mobile));
             return;
         }
+        if (addressField.getText().toString().isEmpty()) {
+            ui.show(this, getString(R.string.enter_address));
+            return;
+        }
+
+
         if (passField.getText().toString().isEmpty()) {
             ui.show(this, getString(R.string.enter_pass));
             return;
         }
 
-
+        if (!cpassField.getText().toString().equals(passField.getText().toString())) {
+            ui.show(this, getString(R.string.pass_not_typical));
+            return;
+        }
         ui.load(SignupActivity.this);
         final String id = app.md5(mobileField.getText().toString() + "_" + passField.getText().toString());
 
@@ -79,13 +87,17 @@ public class SignupActivity extends AppCompatActivity {
         store.setMobile(mobileField.getText().toString());
         store.setStore_name(nameField.getText().toString());
         store.setPassword(passField.getText().toString());
-        DataSourceManager.instance.addStore(this,store);
+        store.setAddress(addressField.getText().toString());
+
+        DataSourceManager.instance.addStore(store);
 
     }
+
+    @Subscribe
 public void onEvent(Store store){
-    ui.show(this,"Welcome to Ofix Community");
-    startActivity(new Intent(this,MainActivity.class));
-    finish();
+        ui.show(this,"Welcome to Ofix Community");
+        startActivity(new Intent(this,MainActivity.class));
+        finish();
 }
 
 }

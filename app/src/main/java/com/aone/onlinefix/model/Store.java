@@ -1,23 +1,28 @@
 package com.aone.onlinefix.model;
 
+import android.content.SharedPreferences;
+
+import com.aone.onlinefix.utils.ui;
+
 import java.util.List;
 
-import io.realm.Realm;
-import io.realm.RealmObject;
-import io.realm.RealmResults;
 import io.realm.annotations.Ignore;
-import io.realm.annotations.PrimaryKey;
 
 /**
  * Created by abuzeid on 10/23/17.
  */
 
-public class Store extends RealmObject{
+public class Store {
 
+
+    private static final String PREF_NAME = "MY_APP_PREF_NAME";
+    private static final String KEY_NAME = "USERNAME";
+    private static final String KEY_MOBILE = "MOBILE";
+    private static final String KEY_EMAIL = "EMAIL";
+    private static final String KEY_ID = "STOREID";
 
 
     private String store_name;
-    @PrimaryKey
     private String store_id;
 
     private String place;
@@ -29,6 +34,7 @@ public class Store extends RealmObject{
     private String email;
     private String password;
     private String username;
+
     @Ignore
     private List<DeviceModel> modelCanFix;
 
@@ -49,6 +55,20 @@ public class Store extends RealmObject{
         this.password = password;
         this.username = username;
         this.modelCanFix = modelCanFix;
+    }
+
+    public static Store getCurrent() {
+        SharedPreferences pref = ui.getContext().getSharedPreferences(PREF_NAME, 0);
+        if (pref.getString(KEY_ID, null) == null) {
+            return null;
+        }
+        Store store = new Store();
+        store.setStore_id(pref.getString(KEY_ID, null));
+        store.setStore_name(pref.getString(KEY_NAME, null));
+        store.setMobile(pref.getString(KEY_MOBILE, null));
+        store.setEmail(pref.getString(KEY_EMAIL, null));
+
+        return store;
     }
 
     public String getStore_name() {
@@ -148,17 +168,11 @@ public class Store extends RealmObject{
     }
 
     public void save() {
-        Realm realm = Realm.getDefaultInstance();
-        realm.beginTransaction();
-        realm.copyToRealm(this);
-        realm.commitTransaction();
+        SharedPreferences.Editor editor = ui.getContext().getSharedPreferences(PREF_NAME, 0).edit();
+        editor.putString(KEY_ID, getStore_id());
+        editor.putString(KEY_NAME, getStore_name());
+        editor.putString(KEY_MOBILE, getMobile());
+        editor.putString(KEY_EMAIL, getEmail());
+        editor.commit();
     }
-
-    public  static  Store getCurrent(){
-        RealmResults<Store> store = Realm.getDefaultInstance().where(Store.class).findAll();
-        if (store.size()>0)
-            return store.get(0);
-        return null;
-    }
-
 }

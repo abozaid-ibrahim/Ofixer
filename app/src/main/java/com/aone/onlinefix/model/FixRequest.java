@@ -27,6 +27,7 @@ public class FixRequest {
     private String devicetype;
     private String notes;
     private String place;
+    private String mobile;
 
 
 
@@ -35,7 +36,9 @@ public class FixRequest {
     }
 
     public FixRequest(String username, String id, String user_id, String request_id, String email, String store_id, String brand_id, String brand,
-                      String model, String date, String state, String problem, String desc, String devicetype, String notes, String place) {
+                      String model, String date, String state, String problem, String desc,
+                      String devicetype, String notes, String place, String mobile) {
+        this.mobile = mobile;
         this.username = username;
         this.id = id;
         this.user_id = user_id;
@@ -180,5 +183,13 @@ public class FixRequest {
 
     public void setStore_id(String store_id) {
         this.store_id = store_id;
+    }
+
+    public String getMobile() {
+        return mobile;
+    }
+
+    public void setMobile(String mobile) {
+        this.mobile = mobile;
     }
 }

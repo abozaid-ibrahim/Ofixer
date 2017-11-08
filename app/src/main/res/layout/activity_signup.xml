@@ -63,6 +63,27 @@
 
 
             <EditText
+                android:id="@+id/signup_address"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@android:color/transparent"
+                android:gravity="top"
+                android:hint="@string/address_in_details"
+                android:inputType="text"
+                android:minHeight="@dimen/et_large_height" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            style="@style/container_linear"
+
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/rounded_border"
+            android:orientation="vertical">
+
+
+            <EditText
                 android:id="@+id/signup_pw"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

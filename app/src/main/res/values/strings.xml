@@ -49,7 +49,13 @@
     <string name="problem_fixed">Problem Fixed</string>
     <string name="store_fixing_your_mobile">Store going to fix your phone</string>
     <string name="problem_not_fixed">Problem Not Fixed</string>
-<array name="guarntee_array">
+    <string name="home_fix_cost">Home repairing Cost</string>
+    <string name="store_fix_cost">Store repairing cost</string>
+    <string name="address">Address</string>
+    <string name="address_in_details">Address in details</string>
+    <string name="pass_not_typical">your password not typical</string>
+    <string name="enter_address">Write your address</string>
+    <array name="guarntee_array">
     <item>All Life Guarntee</item>
     <item>No Guarntee</item>
     <item>1 Month</item>

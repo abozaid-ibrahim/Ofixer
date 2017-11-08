@@ -21,6 +21,32 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+
+
+
+
+
+
+    buildscript {
+        repositories {
+            maven {
+                url 'http://oss.jfrog.org/artifactory/oss-snapshot-local'
+            }
+        }
+        dependencies {
+            classpath "io.realm:realm-gradle-plugin:<version>-SNAPSHOT"
+        }
+    }
+
+    allprojects {
+        repositories {
+            maven {
+                url 'http://oss.jfrog.org/artifactory/oss-snapshot-local'
+            }
+        }
+    }
+
+
 }
 
 dependencies {

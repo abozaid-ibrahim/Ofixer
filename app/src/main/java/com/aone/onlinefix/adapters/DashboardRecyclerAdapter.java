@@ -1,26 +1,17 @@
 package com.aone.onlinefix.adapters;
 
-import android.content.DialogInterface;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.CheckBox;
-import android.widget.EditText;
-import android.widget.RadioGroup;
 
 import com.aone.onlinefix.R;
 import com.aone.onlinefix.model.FixRequest;
-import com.aone.onlinefix.model.FixRequestResponse;
 import com.aone.onlinefix.model.Store;
 import com.aone.onlinefix.presenter.ProblemViewPresenter;
-import com.aone.onlinefix.utils.DataSourceManager;
-import com.aone.onlinefix.utils.app;
 import com.aone.onlinefix.view.FixRequestsFragment;
 
-import java.sql.Time;
 import java.util.List;
 
 
@@ -49,31 +40,24 @@ public class DashboardRecyclerAdapter extends RecyclerView.Adapter<DashboardRecy
         holder.clientPhoneTv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-    callAction(holder.mItem);
-
+                mListener.onFixRequestAcceptClicked(holder.mItem);
 
             }
         });
-        holder.fixBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (null != mListener) {
-                    mListener.onFixRequestAcceptClicked(holder.mItem);
-                }
-            }
-        });
+//        holder.fixBtn.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                if (null != mListener) {
+//                    mListener.onFixRequestAcceptClicked(holder.mItem);
+//                }
+//            }
+//        });
     }
 
-    public  void onEvent(Store user){
+    public void onEvent(Store user) {
 //        app.makeCall(user.getName());
 
     }
-    private void callAction(FixRequest mItem) {
-DataSourceManager.instance.getUser(mItem);
-
-    }
-
-
 
 //
 //    private void showFixingDialog(final FixRequest uri) {

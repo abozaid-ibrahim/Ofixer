@@ -11,27 +11,7 @@
         android:orientation="vertical"
         android:padding="4dp">
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
 
-            <EditText
-                android:id="@+id/dialog_fix_cost_tf"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="16dp"
-                android:layout_weight="1"
-
-                android:fontFamily="sans-serif"
-                android:hint="@string/cost"
-                android:inputType="number" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/le" />
-        </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -42,9 +22,7 @@
                 android:id="@+id/dialog_fix_hours_tf"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="16dp"
                 android:layout_weight="1"
-                android:fontFamily="sans-serif"
                 android:hint="@string/duration"
                 android:inputType="number" />
 
@@ -58,10 +36,8 @@
                 android:id="@+id/dialog_fix_min_tf"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="16dp"
                 android:layout_weight="1"
 
-                android:fontFamily="sans-serif"
                 android:hint="@string/duration"
                 android:inputType="number" />
 
@@ -89,40 +65,51 @@
                 android:layout_height="wrap_content" />
         </LinearLayout>
 
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-
-            android:text="@string/fix_place" />
-
-        <RadioGroup
-            android:id="@+id/dialog_radio_group"
+        <LinearLayout
+            android:id="@+id/dialog_fix_home_cost_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
 
-            <RadioButton
-                android:id="@+id/radioHome"
-                android:layout_width="0dp"
+            <TextView
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="0.3"
-                android:text="@string/home" />
+                android:text="@string/home_fix_cost" />
 
-            <RadioButton
-                android:id="@+id/radioStore"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="0.3"
-                android:text="@string/store" />
 
-            <RadioButton
-                android:id="@+id/radioBoth"
+            <EditText
+                android:id="@+id/dialog_fix_home_cost"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="0.3"
-                android:text="Any" />
-        </RadioGroup>
+                android:layout_weight="1"
+                android:hint="@string/cost"
+                android:inputType="number" />
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/dialog_fix_store_cost_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/store_fix_cost" />
+
+
+            <EditText
+                android:id="@+id/dialog_fix_store_cost"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:hint="@string/cost"
+                android:inputType="number" />
+
+
+        </LinearLayout>
 
 
     </LinearLayout>
