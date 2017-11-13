@@ -6,7 +6,8 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
         android:divider="@drawable/empty_divider"
         android:dividerPadding="15dp"
         android:orientation="vertical"
@@ -18,8 +19,11 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:fontFamily="Changa-Regular"
+            android:gravity="center"
+            android:padding="@dimen/activity_horizontal_margin"
             android:text="@string/intro_text"
-            android:textAppearance="@style/Base.TextAppearance.AppCompat.Large" />
+            android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"
+            android:textColor="@color/grey" />
 
 
         <LinearLayout
@@ -36,7 +40,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@android:color/transparent"
-                android:hint="mobile number"
+                android:gravity="center"
+                android:hint="@string/mobile_number"
                 android:inputType="phone" />
 
         </LinearLayout>
@@ -55,7 +60,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@android:color/transparent"
-                android:hint="password"
+                android:gravity="center"
+                android:hint="@string/password"
                 android:inputType="textPassword" />
 
         </LinearLayout>
@@ -63,19 +69,27 @@
 
         <Button
             android:id="@+id/login_submit"
-            android:layout_marginBottom="20dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="20dp"
             android:text="@string/login" />
 
-        <TextView
-            android:gravity="bottom|center"
-            android:textStyle="bold"
-            android:id="@+id/login_create_user"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="bottom"
-            android:text="@string/create_new_user" />
 
     </LinearLayout>
+
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/grey" />
+
+    <TextView
+        android:id="@+id/login_create_user"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:gravity="bottom|center"
+        android:padding="@dimen/text_margin"
+        android:text="@string/create_new_user"
+        android:textStyle="bold" />
 </LinearLayout>

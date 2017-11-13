@@ -78,7 +78,7 @@ public class DataSourceManager {
         Log.d("vip", "data_snapshot=>> " + dataSnapshot);
     }
 
-    public void getMyProblems(final String storeid) {
+    public void getMyProblems(final String store_id, final String state) {
         DatabaseReference myRef = database.getReference(FirDB.problems_table);
 
         final List<FixRequest> result = new ArrayList<>();
@@ -98,11 +98,13 @@ public class DataSourceManager {
 
                     FixRequest fixRequest = currentObject.getValue(FixRequest.class);
                     if (fixRequest.getStore_id() != null)
-                        if (fixRequest.getState().equals(ProblemState.Store_Going_To_Fix.toString()) &&
-                                fixRequest.getStore_id().equals(storeid)) {
-
+                        if (fixRequest.getStore_id().equals(store_id)) {
                             fixRequest.setUser_id(userid);
-                            result.add(fixRequest);
+
+
+                            if (fixRequest.getState().equals(state)) {
+                                result.add(fixRequest);
+                            }
                         }
                 }
                 EvBus.bus.post(new BaseCallback.FixRequestsCallback(result));

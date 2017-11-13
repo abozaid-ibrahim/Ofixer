@@ -71,6 +71,12 @@ public class Store {
         return store;
     }
 
+    public static void remove() {
+        SharedPreferences.Editor pref = ui.getContext().getSharedPreferences(PREF_NAME, 0).edit();
+        pref.clear().commit();
+
+    }
+
     public String getStore_name() {
         return store_name;
     }
@@ -175,4 +181,5 @@ public class Store {
         editor.putString(KEY_EMAIL, getEmail());
         editor.commit();
     }
+
 }

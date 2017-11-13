@@ -3,11 +3,9 @@ package com.aone.onlinefix.view;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.widget.EditText;
 
 import com.aone.onlinefix.R;
-import com.aone.onlinefix.model.FixRequest;
 import com.aone.onlinefix.model.Store;
 import com.aone.onlinefix.utils.FirDB;
 import com.aone.onlinefix.utils.app;
@@ -18,8 +16,6 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
-
-import java.util.Iterator;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -69,12 +65,6 @@ public class LoginActivity extends AppCompatActivity {
                 ui.dismissLoading();
 
                 if (dataSnapshot.exists()) {
-
-
-                    // dataSnapshot is the "issue" node with all children with id 0
-//                    for (DataSnapshot stores : dataSnapshot.getChildren()) {
-
-
                     Store store = dataSnapshot.getValue(Store.class);
                    store.save();
                     startActivity(new Intent(LoginActivity.this, MainActivity.class));
@@ -86,11 +76,8 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onCancelled(DatabaseError databaseError) {
                 ui.show(LoginActivity.this, "DataBase Error");
-
             }
         });
-
-
     }
 
 

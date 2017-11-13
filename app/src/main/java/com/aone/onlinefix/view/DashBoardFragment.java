@@ -6,6 +6,7 @@ import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -29,16 +30,30 @@ import butterknife.ButterKnife;
 public class DashBoardFragment extends BaseFragment {
 
     private static final int CALL_PERMISSION = 98;
+    private static final String REQUESTS_STATE = "sdf";
     @BindView(R.id.list_dashboard)
     RecyclerView recyclerView;
     String mobile = null;
+    private String state;
 
     public DashBoardFragment() {
     }
 
-    public static DashBoardFragment newInstance() {
+    public static DashBoardFragment newInstance(String state) {
         DashBoardFragment fragment = new DashBoardFragment();
+        Bundle args = new Bundle();
+        args.putString(REQUESTS_STATE, state);
+        fragment.setArguments(args);
         return fragment;
+    }
+
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        if (getArguments() != null) {
+            state = getArguments().getString(REQUESTS_STATE);
+        }
     }
 
     @Override
@@ -47,9 +62,10 @@ public class DashBoardFragment extends BaseFragment {
         View view = inflater.inflate(R.layout.fragment_dashboard, container, false);
         ButterKnife.bind(this, view);
         if (Store.getCurrent() != null) {
-            DataSourceManager.instance.getMyProblems(Store.getCurrent().getStore_id());
-        } else {
 
+            DataSourceManager.instance.getMyProblems(Store.getCurrent().getStore_id(), state);
+        } else {
+            ui.show(getContext(), R.string.login);
         }
 
         return view;
