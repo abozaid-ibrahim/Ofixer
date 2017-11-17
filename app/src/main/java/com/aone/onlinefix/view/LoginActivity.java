@@ -67,7 +67,7 @@ public class LoginActivity extends AppCompatActivity {
                 if (dataSnapshot.exists()) {
                     Store store = dataSnapshot.getValue(Store.class);
                    store.save();
-                    startActivity(new Intent(LoginActivity.this, MainActivity.class));
+                    startActivity(new Intent(LoginActivity.this, HomeActivity.class));
                 } else {
                     ui.show(LoginActivity.this, R.string.store_not_registered);
                 }

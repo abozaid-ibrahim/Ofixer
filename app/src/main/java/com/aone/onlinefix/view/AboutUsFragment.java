@@ -2,20 +2,19 @@ package com.aone.onlinefix.view;
 
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.aone.onlinefix.R;
 
-public class AboutUsFragment extends Fragment {
+public class AboutUsFragment extends BaseFragment {
 
     public AboutUsFragment() {
         // Required empty public constructor
     }
 
-    public static AboutUsFragment newInstance(String param1, String param2) {
+    public static AboutUsFragment newInstance() {
         AboutUsFragment fragment = new AboutUsFragment();
         return fragment;
     }

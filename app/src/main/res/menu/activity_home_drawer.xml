@@ -11,15 +11,15 @@
         <item
             android:id="@+id/nav_current_fixing"
             android:icon="@drawable/ic_menu_gallery"
-            android:title="Accepted Fixes" />
+            android:title="@string/accepted_fixes" />
         <item
             android:id="@+id/nav_history"
             android:icon="@drawable/ic_menu_slideshow"
-            android:title="History" />
+            android:title="@string/history" />
         <item
-            android:id="@+id/nav_manage"
+            android:id="@+id/nav_about"
             android:icon="@drawable/ic_menu_manage"
-            android:title="About Us" />
+            android:title="@string/about_app" />
     </group>
 
     <item android:title="Communicate">
@@ -27,15 +27,15 @@
             <item
                 android:id="@+id/nav_share"
                 android:icon="@drawable/ic_menu_share"
-                android:title="Share" />
+                android:title="@string/share" />
             <item
-                android:id="@+id/nav_send"
+                android:id="@+id/nav_contactus"
                 android:icon="@drawable/ic_menu_send"
-                android:title="Send" />
+                android:title="@string/contact_us" />
             <item
                 android:id="@+id/nav_logout"
                 android:icon="@drawable/ic_menu_send"
-                android:title="Logout" />
+                android:title="@string/logout" />
         </menu>
     </item>
 

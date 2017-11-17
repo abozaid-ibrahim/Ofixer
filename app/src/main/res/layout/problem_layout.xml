@@ -24,6 +24,12 @@
         android:text="@string/test" />
 
     <TextView
+        android:id="@+id/fix_request_desc"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/test" />
+
+    <TextView
         android:id="@+id/fix_request_date"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

@@ -2,7 +2,8 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="#fdf"
+    android:layout_margin="4dp"
+    android:background="@drawable/rounded_item_bg"
     android:orientation="vertical">
 
     <include layout="@layout/problem_layout" />
@@ -21,13 +22,13 @@
             android:id="@+id/item_db_navigate"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Navigate to Cleint" />
+            android:text="@string/navigate_to_cleint" />
 
         <Button
             android:id="@+id/item_db_call"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Call Client Now" />
+            android:text="@string/call_client_now" />
 
     </LinearLayout>
 </LinearLayout>

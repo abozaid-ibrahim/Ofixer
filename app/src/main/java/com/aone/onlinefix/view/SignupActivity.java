@@ -96,7 +96,7 @@ public class SignupActivity extends AppCompatActivity {
     @Subscribe
 public void onEvent(Store store){
         ui.show(this,"Welcome to Ofix Community");
-        startActivity(new Intent(this,MainActivity.class));
+        startActivity(new Intent(this, HomeActivity.class));
         finish();
 }
 

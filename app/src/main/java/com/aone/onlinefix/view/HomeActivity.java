@@ -9,6 +9,7 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
+import android.widget.TextView;
 
 import com.aone.onlinefix.R;
 import com.aone.onlinefix.model.Store;
@@ -24,7 +25,6 @@ public class HomeActivity extends AppCompatActivity
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
@@ -32,14 +32,22 @@ public class HomeActivity extends AppCompatActivity
         toggle.syncState();
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
-        navigationView.setNavigationItemSelectedListener(this);
+        TextView mobiletv = navigationView.getHeaderView(0).findViewById(R.id.header_mobile);
+        TextView nametv = navigationView.getHeaderView(0).findViewById(R.id.header_name);
+        assert Store.getCurrent().getStore_name() != null;
+        nametv.setText(Store.getCurrent().getStore_name());
+        assert Store.getCurrent().getMobile() != null;
+        mobiletv.setText(Store.getCurrent().getMobile());
+//        mobiletv.setText("asdfsafd");
 
+        navigationView.setNavigationItemSelectedListener(this);
 
         if (savedInstanceState == null) {
             selectItem(R.id.nav_fix_requests);
         }
 
     }
+
 
     @Override
     public void onBackPressed() {
@@ -51,7 +59,8 @@ public class HomeActivity extends AppCompatActivity
         }
     }
 
-   /* @Override
+
+    /* @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.home, menu);
@@ -86,16 +95,21 @@ public class HomeActivity extends AppCompatActivity
         BaseFragment fragment = null;
         // Handle navigation view item clicks here.
         // int id = item.getItemId();
-
+        int title = R.string.app_name;
         if (id == R.id.nav_fix_requests) {
             fragment = FixRequestsFragment.newInstance();
 
+            title = R.string.fix_requests;
         } else if (id == R.id.nav_current_fixing) {
             fragment = DashBoardFragment.newInstance(ProblemState.Store_Going_To_Fix.toString());
+            title = R.string.accepted_fixes;
 
         } else if (id == R.id.nav_history) {
             fragment = DashBoardFragment.newInstance(ProblemState.Problem_Fixed.toString());
+            title = R.string.history;
+
         } else if (id == R.id.nav_share) {
+
             share();
         } else if (id == R.id.nav_logout) {
 
@@ -104,16 +118,22 @@ public class HomeActivity extends AppCompatActivity
                     = new Intent(this, LoginActivity.class);
             login.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
             startActivity(login);
-        } else if (id == R.id.nav_send) {
-
+        } else if (id == R.id.nav_contactus) {
+            title = R.string.contact_us;
             fragment = ContactUsFragment.newInstance();
+        } else if (id == R.id.nav_about) {
+            title = R.string.about_app;
+            fragment = AboutUsFragment.newInstance();
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        drawer.closeDrawer(GravityCompat.START);
-        if (fragment != null)
-            getSupportFragmentManager().beginTransaction().replace(R.id.fragments_container, fragment).commit();
 
+        drawer.closeDrawer(GravityCompat.START);
+        if (fragment != null) {
+            getSupportFragmentManager().beginTransaction().replace(R.id.fragments_container, fragment).commit();
+            setTitle(title);
+
+        }
     }
 
     private void share() {
