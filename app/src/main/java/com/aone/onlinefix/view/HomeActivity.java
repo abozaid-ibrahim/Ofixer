@@ -34,12 +34,13 @@ public class HomeActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         TextView mobiletv = navigationView.getHeaderView(0).findViewById(R.id.header_mobile);
         TextView nametv = navigationView.getHeaderView(0).findViewById(R.id.header_name);
-        assert Store.getCurrent().getStore_name() != null;
-        nametv.setText(Store.getCurrent().getStore_name());
-        assert Store.getCurrent().getMobile() != null;
-        mobiletv.setText(Store.getCurrent().getMobile());
+        if (Store.getCurrent() != null) {
+            if (Store.getCurrent().getStore_name() != null)
+                nametv.setText(Store.getCurrent().getStore_name());
+            if (Store.getCurrent().getMobile() != null)
+                mobiletv.setText(Store.getCurrent().getMobile());
 //        mobiletv.setText("asdfsafd");
-
+        }
         navigationView.setNavigationItemSelectedListener(this);
 
         if (savedInstanceState == null) {
